@@ -401,7 +401,7 @@ def inverseIsing(orig_args, infer_args, log):
 
         args = parser.parse_args(finish_args)
     else:
-        args.outdir.mkdir(parents=True)
+        args.outdir.mkdir(parents=True, exist_ok=True)
         logfile = open(args.outdir / 'log', 'wt')
         log = lambda *s, **kwds: print(*s, file=logfile, flush=True, **kwds)
 
@@ -542,7 +542,7 @@ def inverseIsing(orig_args, infer_args, log):
     p['peak_ns'] = 256
     p['cur_ns'] = 256
 
-    mi3gpu.NewtonSteps.newtonMCMC(p, gpus, startrun, jstep, log)
+    mi3gpu.NewtonSteps.newtonMCMC(p, gpus, startrun, jstep, log, unimarg)
 
     logfile.close()
 
@@ -565,7 +565,7 @@ def getEnergies(orig_args, args, log):
 
     requireargs(args, 'couplings alpha seqs')
 
-    args.outdir.mkdir(parents=True)
+    args.outdir.mkdir(parents=True, exist_ok=True) #args.outdir.mkdir(parents=True)
     logfile = open(args.outdir / 'log', 'wt')
     log = lambda *s, **kwds: print(*s, file=logfile, flush=True, **kwds)
 
@@ -630,7 +630,7 @@ def MCMCbenchmark(orig_args, args, log):
     if args.nwalkers is None:
         raise ValueError("--nwalkers is required")
 
-    args.outdir.mkdir(parents=True)
+    args.outdir.mkdir(parents=True, exist_ok=True)
     logfile = open(args.outdir / 'log', 'wt')
     log = lambda *s, **kwds: print(*s, file=logfile, flush=True, **kwds)
 
@@ -738,7 +738,7 @@ def equilibrate(orig_args, args, log):
     args = parser.parse_args(args)
     args.measurefperror = False
 
-    args.outdir.mkdir(parents=True)
+    args.outdir.mkdir(parents=True, exist_ok=True)
     logfile = open(args.outdir / 'log', 'wt')
     log = lambda *s, **kwds: print(*s, file=logfile, flush=True, **kwds)
 
@@ -889,7 +889,7 @@ def subseqFreq(orig_args, args, log):
     args = parser.parse_args(args)
     args.measurefperror = False
 
-    args.outdir.mkdir(parents=True)
+    args.outdir.mkdir(parents=True, exist_ok=True)
     logfile = open(args.outdir / 'log', 'wt')
     log = lambda *s, **kwds: print(*s, file=logfile, flush=True, **kwds)
 

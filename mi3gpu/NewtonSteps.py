@@ -686,7 +686,7 @@ def MCMCstep(runName, Jstep, couplings, param, gpus, log):
 
     return Jstep + Jsteps, seqs, sampledenergies, newJ
 
-def newtonMCMC(param, gpus, start_run, Jstep, log):
+def newtonMCMC(param, gpus, start_run, Jstep, log, unimarg):
     J = param.couplings
 
     # copy target bimarg to gpus
@@ -739,7 +739,7 @@ def newtonMCMC(param, gpus, start_run, Jstep, log):
         elif param.reseed == 'single_indep':
             seed = mi3gpu.Mi3.generateSequences('independent',
                                                 param.L, param.q, 1,
-                                                log, param.unimarg)[0]
+                                                log, unimarg = unimarg)[0] 
         elif param.reseed == 'single_random':
             #choose random seed from the final sequences from last round
             nseq = np.sum(s.shape[0] for s in seqs)
