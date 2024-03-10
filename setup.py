@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 import setuptools
-import numpy
+ 
 
 seqtools_module = setuptools.Extension('mi3gpu.utils.seqtools',
                     sources = ['mi3gpu/utils/seqtools.c'],
-                    include_dirs=[numpy.get_include()],
+                    include_dirs=['/opt/conda/lib/python3.10/site-packages/numpy/core/include'],
                     extra_compile_args = ['-O3', '-Wall'])
 
 with open("README.md", "r") as fh:
