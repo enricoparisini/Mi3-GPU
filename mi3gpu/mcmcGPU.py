@@ -18,6 +18,7 @@
 
 import os, time, warnings, textwrap, collections
 from pathlib import Path
+import time
 import numpy as np
 from numpy.random import RandomState
 import pyopencl as cl
@@ -1085,7 +1086,7 @@ def setup_GPU_context(scriptpath, scriptfile, param, log):
     options.append(('BETA', param.beta if param.beta is not None else 1))
     optstr = " ".join(["-D {}={}".format(opt,val) for opt,val in options])
     log("Compilation Options: ", optstr)
-    extraopt = " -cl-nv-verbose -Werror -I {}".format(scriptpath)
+    extraopt = " -Werror -I {}".format(scriptpath) #extraopt = " -cl-nv-verbose -Werror -I {}".format(scriptpath)
     log("Compiling CL...")
 
     with warnings.catch_warnings():
@@ -1093,7 +1094,7 @@ def setup_GPU_context(scriptpath, scriptfile, param, log):
         cl_prg = cl.Program(cl_ctx, src).build(optstr + extraopt)
 
     # dump compiled program
-    ptx = cl_prg.get_info(cl.program_info.BINARIES)[0].decode('utf-8')
+    ptx = cl_prg.get_info(cl.program_info.BINARIES)[0].decode('utf-8', errors='replace')
     # get compile log (Nvidia truncates this at 4096 bytes.. annoying)
     compile_log = cl_prg.get_build_info(gpudevices[0], cl.program_build_info.LOG)
 
