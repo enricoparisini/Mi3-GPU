@@ -47,6 +47,5 @@ setuptools.setup(
        'scipy>=1.0.0',
        'pyopencl',
        'configargparse',
-    ],
-    setup_requires=['setuptools-git-ver'],
+    ]
 )
